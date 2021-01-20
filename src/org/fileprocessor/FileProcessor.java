@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+
 /**
  * This class is a customized version of buffer reader
  */
@@ -14,6 +15,7 @@ public class FileProcessor {
     private String tempDirecotry = "/Users/srinivasbanoth/myprojects/file-processor/output/";//update with actual path
     private String outputFilePath = "/Users/srinivasbanoth/myprojects/file-processor/playerssorted.txt";
 
+    private int maxLinesPerTempFile =100;
     /**
      * Clears the temp directory.
      */
@@ -30,7 +32,7 @@ public class FileProcessor {
      */
     public void sortFileData() {
         clearDirectory();//clears temp directory. directory path can be dynamic in real world scenario.
-        int noOfLines = 100;//for testing purpose using 100 only. In real test scenario,
+        int noOfLines = maxLinesPerTempFile;//for testing purpose using 100 only. In real test scenario,
         // this can be as large as possible(depends on memory)
         //this can be divided based on memory also
 
@@ -46,7 +48,7 @@ public class FileProcessor {
                 handle(splitStr, players);
                 noOfLines--;
                 if (noOfLines == 0) {//reset to initial value and write data to file
-                    noOfLines = 100;
+                    noOfLines = maxLinesPerTempFile;
                     createTempFile(new StringBuilder(tempDirecotry).append(index).append(".txt").toString(), players);
                     players.clear();
                     index++;
